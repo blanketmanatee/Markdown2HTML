@@ -3,6 +3,7 @@
 
 from sys import argv, stderr
 from os import path
+import markdown
 
 if __name__=='__main__':
     if len(argv) < 2:
@@ -13,3 +14,9 @@ if __name__=='__main__':
         print("Missing {}".format(argv[1]), file=stderr)
         exit(1)
     
+    with open('README.md', r) as f:
+        text = f.read()
+        html = markdown.markdown(text)
+    
+    with open('README.html', 'w') as f:
+        f.write(html)
