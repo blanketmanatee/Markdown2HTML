@@ -37,17 +37,17 @@ def parse_ol(li: list):
         if len(uls) > 0 and uls[0] == '-':
             if ul:
                 html.append('<li>' +uls[1:].lstrip(' ') + '</li>')
-                else:
-                    ul = True
-                    html.append('<ul>')
-                    html.append('<li>' + uls[1:].lstrip(' ') + '</li>')
-                elif (len(uls) == 0 or uls[0] != '-') and ul:
-                    ul = False
-                    html.append('</ul>')
-                    html.append(uls)
-                else:
-                    html.append(uls)
-            return html
+            else:
+                ul = True
+                html.append('<ul>')
+                html.append('<li>' + uls[1:].lstrip(' ') + '</li>')
+        elif (len(uls) == 0 or uls[0] != '-') and ul:
+            ul = False
+            html.append('</ul>')
+            html.append(uls)
+        else:
+            html.append(uls)
+        return html
 
 if __name__=='__main__':
     def readIt():
