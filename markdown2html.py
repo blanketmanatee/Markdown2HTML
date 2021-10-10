@@ -3,10 +3,34 @@
 
 from sys import argv, stderr
 from os import path
-import markdown
+
+def parse_header(header: list):
+    """
+    parse markdown header and convert to HTML
+    """
+    html = []
+
+    for headertag in header:
+        if len(headertag) > 0 and headertag[0] == '#':
+            hashes = 0
+            while hashes < len(
+                    headertag) and headertag[hashes] == '#':
+                hashes += 1
+            if hashes > 6:
+                hashes = 6
+            html_h = 'h' + str(hashes)
+            headertag = headertag.strip('#')
+            headertag = headertag.strip(' ')
+            headertag = '<' + html_h + '>' + headertag + '</' + html_h + '>'
+        html.append(headertag)
+    return html
+
 
 if __name__=='__main__':
-    if len(argv) < 2:
+    def readIt():
+        """ main function """
+    
+    if len(argv) < 3:
         print("Usage: ./markdown2html.py README.md README.html", file=stderr)
         exit(1)
     
@@ -14,9 +38,19 @@ if __name__=='__main__':
         print("Missing {}".format(argv[1]), file=stderr)
         exit(1)
     
-    with open('README.md', r) as f:
-        text = f.read()
-        html = markdown.markdown(text)
+    markdown = argv[1]
+    output = argv[2]
+
+    markdown_list = []
+
+
+    with open(markdown, 'r') as f:
+        markdown_list = f.read()
+        markdown_list = ''.join(markdown_list).split('\n')
     
-    with open('README.html', 'w') as f:
-        f.write(html)
+    markdown_list = parse_header(markdown_list)
+    markdown_list = '\n'.join(markdown_list).split('\n')
+
+    with open(output, 'w') as f:
+        for markdown_h in markdown_list:
+            f.write(markdown_h + '\n')
