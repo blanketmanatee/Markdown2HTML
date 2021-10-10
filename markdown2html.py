@@ -69,9 +69,11 @@ if __name__=='__main__':
 
     with open(markdown, 'r') as f:
         markdown_list = f.read()
-        markdown_list = ''.join(markdown_list).split('\n')
+    markdown_list = ''.join(markdown_list).split('\n')
     
     markdown_list = parse_header(markdown_list)
+    markdown_list = '\n'.join(markdown_list).split('\n')
+    markdown_list = parse_ol(markdown_list)
     markdown_list = '\n'.join(markdown_list).split('\n')
 
     with open(output, 'w') as f:
