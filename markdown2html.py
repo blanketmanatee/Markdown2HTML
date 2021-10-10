@@ -25,6 +25,29 @@ def parse_header(header: list):
         html.append(headertag)
     return html
 
+def parse_ol(li: list):
+    """
+    parses markdown of ordered lists into html
+    """
+
+    html = []
+    ul = False
+
+    for uls in li:
+        if len(uls) > 0 and uls[0] == '-':
+            if ul:
+                html.append('<li>' +uls[1:].lstrip(' ') + '</li>')
+                else:
+                    ul = True
+                    html.append('<ul>')
+                    html.append('<li>' + uls[1:].lstrip(' ') + '</li>')
+                elif (len(uls) == 0 or uls[0] != '-') and ul:
+                    ul = False
+                    html.append('</ul>')
+                    html.append(uls)
+                else:
+                    html.append(uls)
+            return html
 
 if __name__=='__main__':
     def readIt():
